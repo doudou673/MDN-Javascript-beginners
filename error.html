@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>error</title> 
+  </head>
+  <body>
+    
+  </body>
+  <script>
+    function getMonthName(mo) {
+      mo = mo - 1; // Adjust month number for array index (1 = Jan, 12 = Dec)
+      var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul",
+                    "Aug","Sep","Oct","Nov","Dec"];
+      if (months[mo]) {
+        return months[mo];
+      } else {
+        // console.log('here')
+        throw "InvalidMonthNo"; //throw keyword is used here
+      }
+    }
+
+    try { // statements to try
+      monthName = getMonthName(15); // function could throw exception
+    }
+    catch (e) {
+      monthName = "unknown";
+      console.log(e); // pass exception object to error handler -> your own function
+    }
+
+    function doSomethingErrorProne () {
+      if (ourCodeMakesAMistake()) {
+        throw (new Error('The message'));
+      } else {
+        doSomethingToGetAJavascriptError();
+      }
+    }
+
+    try {
+      doSomethingErrorProne();
+    }
+    catch (e) {
+      console.log(e.name); // logs 'Error'
+      console.log(e.message); // logs 'The message' or a JavaScript error message)
+    }
+    const msPerDay = 24 * 60 * 60 * 1000;
+ 
+    // July 17, 2014 00:00:00 UTC.
+    const july172014 = new Date('2014-6-17');//2014-1970=44年
+    //这样创建日期真是醉人。。。还要自己计算天数。。。11是闰年中多出的天数。。。
+    //197是6×30+16(7月的16天)+3(3个大月)-2(2月少2天)
+
+    const options = { year: "2-digit", month: "2-digit", day: "2-digit",
+                    hour: "2-digit", minute: "2-digit", timeZoneName: "short" };
+    const americanDateTime = new Intl.DateTimeFormat("en-US", options).format;
+    console.log(july172014)
+    console.log(americanDateTime(july172014)); // 07/16/14, 5:00 PM PDT
+  </script>
+</html>
