@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>simple-sync</title>
+</head>
+<body>
+  <div>
+    <button>click me</button>
+  </div>
+  <script>
+    const button = document.querySelector('button');
+    button.addEventListener('click',()=>{
+      let myDate;
+      for(let i = 0; i < 10000000; i ++){
+        let date = new Date();
+        myDate = date;
+      }
+      console.log(myDate);
+
+      let pElm = document.createElement('p');
+      pElm.textContent = 'This is a newly-added paragraph.';
+      document.body.appendChild(pElm);
+    })
+  </script>
+</body>
+</html>
