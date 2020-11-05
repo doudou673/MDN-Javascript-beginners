@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>async</title>
+</head>
+<body>
+  <div>async/await基础</div>
+  <script>
+    async function hello(){
+      return 'Hello'
+    };
+    console.log(hello())
+    hello().then((value)=>console.log(value))
+
+    async function myFetch(){
+      try{
+        let response = await fetch('coffee.jpg');
+        let Blob = await response.blob();
+
+        let objectURL = URL.createObjectURL(Blob);
+        let image = document.createElement('img');
+        image.src = objectURL;
+        document.body.appendChild(image);
+      }catch(e){
+        console.log('error: ' + e.message);
+      }
+    }
+
+    myFetch()
+
+    async function fetchAndDecode(url,type){
+      let response = await fetch(url);
+      let content;
+
+      if(type === 'blob'){
+        content = await response.blob();
+      }else if(type === 'text'){
+        content = await response.text();
+      }
+
+      return content;
+    }
+
+    async function displayContent(){
+      let coffee = fetchAndDecode('coffee.jpg','blob');
+      let des = fetchAndDecode('description.txt','text');
+
+      let values = await Promise.all([coffee,des]);
+
+      let objectURL1 = URL.createObjectURL(values[0]);
+      let objectURL2 = values[1];
+
+      let image = document.createElement('img');
+      image.src = objectURL1;
+
+      document.body.appendChild(image);
+      let paragram = document.createElement('p');
+      paragram.textContent = objectURL2;
+      document.body.appendChild(paragram);
+    }
+
+    displayContent().catch((e)=>{console.log(e)});
+  </script>
+</body>
+</html>

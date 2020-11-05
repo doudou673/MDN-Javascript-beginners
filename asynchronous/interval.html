@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>interval</title>
+  <style>
+    body{
+      text-align: center;
+    }
+    div{
+      height: 50px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+  <button id="start">Start</button>
+  <button id="stop">Stop</button>
+  <button id="reset">Reset</button>
+  <script>
+    const dosomething = document.querySelector('div');
+    const timestart = document.getElementById('start');
+    const timestop = document.getElementById('stop');
+    const timereset = document.getElementById('reset');
+    let myInterval;
+    let time = 0;
+
+    function SetTime(){
+      let date = new Date().toLocaleTimeString();
+      time ++;
+      let second = Math.floor(time%60);
+      let hour = Math.floor(time/3600);
+      let minutes = Math.floor((time%3600)/60);
+      
+      let newsecond = second > 9 ? second : '0'+second;
+      let newminutes = minutes > 9 ? minutes : '0'+minutes;
+      let newhour = hour > 9 ? hour : '0'+hour;
+      dosomething.innerHTML = date + '<br>' + newhour + ' : ' + newminutes + ' : ' + newsecond;
+    }
+    
+    timestart.addEventListener('click',()=>{
+      myInterval = setInterval(SetTime,1000);
+      timestart.disabled = true;
+    });
+    timestop.addEventListener('click',()=>{
+      clearInterval(myInterval);
+      timestart.disabled = false;
+    })
+    timereset.addEventListener('click',()=>{
+      dosomething.textContent = "";
+      time = 0;
+    })
+  </script>
+</body>
+</html>
